@@ -1,0 +1,1910 @@
+<html lang="">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>淘钱宝 API</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <link rel="stylesheet" href="./style.css">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+</head>
+<body>
+<div class="book with-summary with-header">
+    <div class="book-summary">
+        <nav role="navigation">
+            <ul class="summary">
+                <li class="chapter open">
+                    <a href="javascript:void(0);">相机/图片相关</a>
+                    <ul class="articles">
+                        <li class="chapter">
+                            <a href="#chooseimageobject">chooseImage</a>
+                        </li>
+                        <li class="chapter">
+                            <a href="#previewimage">previewImage</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="chapter open">
+                    <a href="javascript:void(0);">剪贴板相关</a>
+                    <ul class="articles">
+                        <li class="chapter">
+                            <a href="#setclipboarddata">setClipboardData</a>
+                        </li>
+                        <li class="chapter">
+                            <a href="#getclipboarddata">getClipboardData</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="chapter open">
+                    <a href="javascript:void(0);">短信/通讯相关</a>
+                    <ul class="articles">
+                        <li class="chapter">
+                            <a href="#getSmsHistory">getSmsHistory</a>
+                        </li>
+                        <li class="chapter">
+                            <a href="#makephonecall">makePhoneCall</a>
+                        </li>
+                        <li class="chapter">
+                            <a href="#getCallHistory">getCallHistory</a>
+                        </li>
+                        <li class="chapter">
+                            <a href="#getContact">getContact</a>
+                        </li>
+                        <li class="chapter">
+                            <a href="#getaddressbook">getAddressBook</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="chapter open">
+                    <a href="javascript:void(0);">导航相关</a>
+                    <ul class="articles">
+                        <li class="chapter">
+                            <a href="#navigateto">navigateTo</a>
+                        </li>
+                        <li class="chapter">
+                            <a href="#redirectto">redirectTo</a>
+                        </li>
+                        <li class="chapter">
+                            <a href="#navigateback">navigateBack</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="chapter open">
+                    <a href="javascript:void(0);">导航栏相关</a>
+                    <ul class="articles">
+                        <li class="chapter">
+                            <a href="#setnavigationbartitle">setNavigationBarTitle</a>
+                        </li>
+                        <li class="chapter">
+                            <a href="#setnavigationbarcolor">setNavigationBarColor</a>
+                        </li>
+                        <li class="chapter">
+                            <a href="#shownavigationbar">showNavigationBar</a>
+                        </li>
+                        <li class="chapter">
+                            <a href="#hidenavigationbar">hideNavigationBar</a>
+                        </li>
+                        <li class="chapter">
+                            <a href="#setNavbarRightBtn">setNavbarRightBtn</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="chapter open">
+                    <a href="javascript:void(0);">分享/系统相关</a>
+                    <ul class="articles">
+                        <li class="chapter">
+                            <a href="#shareinfo">shareInfo</a>
+                        </li>
+                        <li class="chapter">
+                            <a href="#getlocation">getLocation</a>
+                        </li>
+                        <li class="chapter">
+                            <a href="#getDeviceInfo">getDeviceInfo</a>
+                        </li>
+                        <li class="chapter">
+                            <a href="#jsProxyVer">jsProxyVer</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="chapter open">
+                    <a href="javascript:void(0);">用户相关</a>
+                    <ul class="articles">
+                        <li class="chapter">
+                            <a href="#register">register</a>
+                        </li>
+                        <li class="chapter">
+                            <a href="#login">login</a>
+                        </li>
+                        <li class="chapter">
+                            <a href="#logout">logout</a>
+                        </li>
+                        <li class="chapter">
+                            <a href="#getuserinfo">getUserInfo</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="chapter open">
+                    <a href="#web">淘钱宝API相关文档</a>
+                    <ul class="articles">
+                        <li class="chapter">
+                            <a href="javascript:void(0);"></a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div class="book-body">
+        <!--图片-->
+        <div class="page-inner" id="chooseimageobject">
+            <section class="normal markdown-section">
+                <h3>chooseImage(OBJECT)</h3>
+                <p>从相册选图或使用相机拍照。</p>
+                <p><strong>OBJECT参数说明：</strong></p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>参数</th>
+                        <th>类型</th>
+                        <th>必填</th>
+                        <th>说明</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>sourceType</td>
+                        <td>String</td>
+                        <td>否</td>
+                        <td>album 从相册选图，camera 使用相机，无数据/其他的时候 二者都允许</td>
+                    </tr>
+                    <tr>
+                        <td>success</td>
+                        <td>Function</td>
+                        <td>是</td>
+                        <td>接口调用成功的回调函数</td>
+                    </tr>
+
+                    </tbody>
+                </table>
+                <p><strong>返回参数说明：</strong></p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>参数</th>
+                        <th>类型</th>
+                        <th>说明</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>data</td>
+                        <td>String</td>
+                        <td>图片Base64字符串</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>code</td>
+                        <td>Number</td>
+                        <td>调用反馈标识，成功：0 ；失败：-1</td>
+                    </tr>
+                    <tr>
+                        <td>msg</td>
+                        <td>String</td>
+                        <td>调用反馈信息</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p><strong>示例代码：</strong></p>
+                <pre><code class="lang-javascript">tqb.chooseImage({
+  success: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">res</span>) </span>{
+    <span class="hljs-comment">// 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片</span>
+    <span class="hljs-keyword">var</span> tempFilePaths = res.tempFilePaths
+  }
+})
+</code></pre>
+
+
+            </section>
+        </div>
+        <div class="page-inner" id="previewimage">
+            <section class="normal markdown-section">
+                <h3>previewImage(OBJECT)</h3>
+                <p>预览图片。</p>
+                <p><strong>OBJECT参数说明：</strong></p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>参数</th>
+                        <th>类型</th>
+                        <th>必填</th>
+                        <th>说明</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>urls</td>
+                        <td>StringArray</td>
+                        <td>是</td>
+                        <td>需要预览的图片链接列表</td>
+                    </tr>
+                    <tr>
+                        <td>success</td>
+                        <td>Function</td>
+                        <td>否</td>
+                        <td>接口调用成功的回调函数</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p><strong>返回参数说明：</strong></p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>参数</th>
+                        <th>类型</th>
+                        <th>说明</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>code</td>
+                        <td>Number</td>
+                        <td>调用反馈标识，成功：0 ；失败：-1</td>
+                    </tr>
+                    <tr>
+                        <td>msg</td>
+                        <td>String</td>
+                        <td>调用失败反馈信息</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p><strong>示例代码：</strong></p>
+                <pre><code class="lang-javascript">tqb.previewImage({
+  urls: [] <span class="hljs-comment">// 需要预览的图片http链接列表</span>
+})
+</code></pre>
+            </section>
+        </div>
+        <!--获取经纬度-->
+        <div class="page-inner" id="getlocation">
+            <section class="normal markdown-section">
+                <h3>getLocation(OBJECT)</h3>
+                <p>获取当前的地理位置。当用户离开淘钱宝后，此接口无法调用；</p>
+                <p><strong>OBJECT参数说明：</strong></p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>参数</th>
+                        <th>类型</th>
+                        <th>必填</th>
+                        <th>说明</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>success</td>
+                        <td>Function</td>
+                        <td>是</td>
+                        <td>接口调用成功的回调函数，返回内容详见返回参数说明。</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p><strong>success返回参数说明：</strong></p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>参数</th>
+                        <th>类型</th>
+                        <th>说明</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>data</td>
+                        <td>Object</td>
+                        <td>返回数据对象</td>
+                    </tr>
+                    <tr>
+                        <td>data.latitude</td>
+                        <td>Number</td>
+                        <td>latitude：纬度；均为浮点数</td>
+                    </tr>
+                    <tr>
+                        <td>data.longitude</td>
+                        <td>Number</td>
+                        <td>longitude：经度，均为浮点数</td>
+                    </tr>
+                    <tr>
+                        <td>data.address</td>
+                        <td>String</td>
+                        <td>返回当前的地理位置对应实际地址</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>data.addressDetail</td>
+                        <td>Object</td>
+                        <td>返回实际地址对象 province:省；city:市；region:区；street:街道</td>
+                    </tr>
+                    <tr>
+                        <td>code</td>
+                        <td>Number</td>
+                        <td>调用反馈标识，成功：0 ；失败：-1</td>
+                    </tr>
+                    <tr>
+                        <td>msg</td>
+                        <td>String</td>
+                        <td>调用失败反馈信息</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p><strong>示例代码：</strong></p>
+                <pre><code class="lang-javascript">tqb.getLocation({
+  success: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">res</span>) </span>{
+    <span class="hljs-keyword">var</span> latitude = res.latitude
+    <span class="hljs-keyword">var</span> longitude = res.longitude
+    <span class="hljs-keyword">var</span> speed = res.speed
+    <span class="hljs-keyword">var</span> accuracy = res.accuracy
+  }
+})
+</code></pre>
+
+
+            </section>
+        </div>
+        <!--  拨打电话  -->
+        <div class="page-inner" id="makephonecall">
+            <section class="normal markdown-section">
+                <h3 id="tqbmakephonecallobject">tqb.makePhoneCall(OBJECT)</h3>
+                <p>拨打电话</p>
+                <p><strong>OBJECT参数说明：</strong></p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>参数</th>
+                        <th>类型</th>
+                        <th>必填</th>
+                        <th>说明</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>phoneNumber</td>
+                        <td>String</td>
+                        <td>是</td>
+                        <td>需要拨打的电话号码</td>
+                    </tr>
+                    <tr>
+                        <td>success</td>
+                        <td>Function</td>
+                        <td>否</td>
+                        <td>接口调用成功的回调</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p><strong>success返回参数说明：</strong></p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>参数</th>
+                        <th>类型</th>
+                        <th>说明</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>code</td>
+                        <td>Number</td>
+                        <td>调用反馈标识，成功：0 ；失败：-1</td>
+                    </tr>
+                    <tr>
+                        <td>msg</td>
+                        <td>String</td>
+                        <td>调用反馈信息</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p><strong>示例代码：</strong></p>
+                <pre><code class="lang-javascript">tqb.makePhoneCall({
+  phoneNumber: <span class="hljs-string">'123456'</span> <span class="hljs-comment">//仅为示例，并非真实的电话号码</span>
+})
+</code></pre>
+
+
+            </section>
+        </div>
+        <!-- 剪贴板 -->
+        <div class="page-inner" id="setclipboarddata">
+            <section class="normal markdown-section">
+                <h3>setClipboardData(OBJECT)</h3>
+                <p>设置系统剪贴板的内容</p>
+                <p><strong>OBJECT参数说明：</strong></p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>参数</th>
+                        <th>类型</th>
+                        <th>必填</th>
+                        <th>说明</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>data</td>
+                        <td>String</td>
+                        <td>是</td>
+                        <td>设置剪贴板的内容</td>
+                    </tr>
+                    <tr>
+                        <td>success</td>
+                        <td>Function</td>
+                        <td>否</td>
+                        <td>接口调用成功的回调函数</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p><strong>success返回参数说明：</strong></p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>参数</th>
+                        <th>类型</th>
+                        <th>说明</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>code</td>
+                        <td>Number</td>
+                        <td>调用反馈标识，成功：0 ；失败：-1</td>
+                    </tr>
+                    <tr>
+                        <td>msg</td>
+                        <td>String</td>
+                        <td>调用失败反馈信息</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p><strong>示例代码：</strong></p>
+                <pre><code class="lang-javascript">tqb.setClipboardData({
+  data: <span class="hljs-string">'data'</span>,
+})
+</code></pre>
+
+            </section>
+        </div>
+        <div class="page-inner" id="getclipboarddata">
+            <section class="normal markdown-section">
+                <h3>getClipboardData(OBJECT)</h3>
+                <p>获取系统剪贴板内容</p>
+                <p><strong>OBJECT参数说明：</strong></p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>参数</th>
+                        <th>类型</th>
+                        <th>必填</th>
+                        <th>说明</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>success</td>
+                        <td>Function</td>
+                        <td>否</td>
+                        <td>接口调用成功的回调函数</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p><strong>success返回参数说明：</strong></p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>参数</th>
+                        <th>类型</th>
+                        <th>说明</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>data</td>
+                        <td>String</td>
+                        <td>剪贴板的内容</td>
+                    </tr>
+                    <tr>
+                        <td>code</td>
+                        <td>Number</td>
+                        <td>调用反馈标识，成功：0 ；失败：-1</td>
+                    </tr>
+                    <tr>
+                        <td>msg</td>
+                        <td>String</td>
+                        <td>调用失败反馈信息</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p><strong>示例代码：</strong></p>
+                <pre><code class="lang-javascript">tqb.getClipboardData({
+  success: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">res</span>)</span>{
+    <span class="hljs-built_in">console</span>.log(res.data)
+  }
+})
+</code></pre>
+
+
+            </section>
+        </div>
+        <!--  设置导航条  -->
+        <div class="page-inner" id="setnavigationbartitle">
+            <section class="normal markdown-section">
+                <h3>setNavigationBarTitle(OBJECT)</h3>
+                <p>动态设置当前页面的标题内容。</p>
+                <p><strong>OBJECT参数说明：</strong></p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>参数</th>
+                        <th>类型</th>
+                        <th>必填</th>
+                        <th>说明</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>title</td>
+                        <td>String</td>
+                        <td>是</td>
+                        <td>页面标题</td>
+                    </tr>
+                    <tr>
+                        <td>success</td>
+                        <td>Function</td>
+                        <td>否</td>
+                        <td>接口调用成功的回调函数</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p><strong>success返回参数说明：</strong></p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>参数</th>
+                        <th>类型</th>
+                        <th>说明</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>code</td>
+                        <td>Number</td>
+                        <td>调用反馈标识，成功：0 ；失败：-1</td>
+                    </tr>
+                    <tr>
+                        <td>msg</td>
+                        <td>String</td>
+                        <td>调用失败反馈信息</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p><strong>示例代码：</strong></p>
+                <pre><code class="lang-javascript">tqb.setNavigationBarTitle({
+  title: <span class="hljs-string">'当前页面'</span>
+})
+</code></pre>
+
+            </section>
+        </div>
+        <div class="page-inner" id="setnavigationbarcolor">
+            <section class="normal markdown-section">
+                <h3>setNavigationBarColor(OBJECT)</h3>
+                <p>设置当前页面的标题样式。</p>
+                <p><strong>OBJECT参数说明：</strong></p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>参数名</th>
+                        <th>类型</th>
+                        <th>必填</th>
+                        <th>说明</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>frontColor</td>
+                        <td>String</td>
+                        <td>是</td>
+                        <td>前景颜色值，包括按钮、标题、状态栏的颜色，仅支持 #ffffff 和 #000000</td>
+                    </tr>
+                    <tr>
+                        <td>backgroundColor</td>
+                        <td>String</td>
+                        <td>是</td>
+                        <td>背景颜色值，有效值为十六进制颜色</td>
+                    </tr>
+                    <tr>
+                        <td>success</td>
+                        <td>Function</td>
+                        <td>否</td>
+                        <td>接口调用成功的回调函数</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p><strong>success返回参数说明：</strong></p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>参数</th>
+                        <th>类型</th>
+                        <th>说明</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>code</td>
+                        <td>Number</td>
+                        <td>调用反馈标识，成功：0 ；失败：-1</td>
+                    </tr>
+                    <tr>
+                        <td>msg</td>
+                        <td>String</td>
+                        <td>调用失败反馈信息</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p><strong>示例代码：</strong></p>
+                <pre><code class="lang-javascript">tqb.setNavigationBarColor({
+    frontColor: <span class="hljs-string">'#ffffff'</span>,
+    backgroundColor: <span class="hljs-string">'#ff0000'</span>
+})
+</code></pre>
+
+
+            </section>
+        </div>
+        <div class="page-inner" id="shownavigationbar">
+            <section class="normal markdown-section">
+                <h3 id="tqbshownavigationbarloading">tqb.showNavigationBar()</h3>
+                <p>显示导航条。</p>
+                <p><strong>success返回参数说明：</strong></p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>参数</th>
+                        <th>类型</th>
+                        <th>说明</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>code</td>
+                        <td>Number</td>
+                        <td>调用反馈标识，成功：0 ；失败：-1</td>
+                    </tr>
+                    <tr>
+                        <td>msg</td>
+                        <td>String</td>
+                        <td>调用失败反馈信息</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p><strong>示例代码：</strong></p>
+                <pre><code class="lang-javascript">tqb.showNavigationBar()</code></pre>
+            </section>
+        </div>
+        <div class="page-inner" id="hidenavigationbar">
+            <section class="normal markdown-section">
+                <h3 id="tqbhidenavigationbarloading">tqb.hideNavigationBar()</h3>
+                <p>隐藏导航条。</p>
+                <p><strong>success返回参数说明：</strong></p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>参数</th>
+                        <th>类型</th>
+                        <th>说明</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>code</td>
+                        <td>Number</td>
+                        <td>调用反馈标识，成功：0 ；失败：-1</td>
+                    </tr>
+                    <tr>
+                        <td>msg</td>
+                        <td>String</td>
+                        <td>调用失败反馈信息</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p><strong>示例代码：</strong></p>
+                <pre><code class="lang-javascript">tqb.hideNavigationBar()</code></pre>
+            </section>
+        </div>
+        <!--  导航  -->
+        <div class="page-inner" id="navigateto">
+            <section class="normal markdown-section">
+                <h3>navigateTo(OBJECT)</h3>
+                <p>保留当前页面，跳转到应用内的某个页面，使用<code>tqb.navigateBack</code>可以返回到原页面。</p>
+                <p><strong>OBJECT 参数说明：</strong></p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>参数</th>
+                        <th>类型</th>
+                        <th>必填</th>
+                        <th>说明</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>url</td>
+                        <td>String</td>
+                        <td>是</td>
+                        <td>需要跳转的URL地址
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>success</td>
+                        <td>Function</td>
+                        <td>否</td>
+                        <td>接口调用成功的回调函数</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p><strong>success返回参数说明：</strong></p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>参数</th>
+                        <th>类型</th>
+                        <th>说明</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>code</td>
+                        <td>Number</td>
+                        <td>调用反馈标识，成功：0 ；失败：-1</td>
+                    </tr>
+                    <tr>
+                        <td>msg</td>
+                        <td>String</td>
+                        <td>调用失败反馈信息</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p><strong>示例代码：</strong></p>
+                <pre><code class="lang-javascript">tqb.navigateTo({
+  url: <span class="hljs-string">'http://www.taoqian123.com/test/test?id=1'</span>
+})
+</code></pre>
+
+            </section>
+        </div>
+        <div class="page-inner" id="getCallHistory">
+            <section class="normal markdown-section">
+                <h3>getCallHistory(OBJECT)</h3>
+                <p>获取通话记录</p>
+                <p><strong>OBJECT 参数说明：</strong></p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>参数</th>
+                        <th>类型</th>
+                        <th>必填</th>
+                        <th>说明</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>success</td>
+                        <td>Function</td>
+                        <td>否</td>
+                        <td>接口调用成功的回调函数</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p><strong>success返回参数说明：</strong></p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>参数</th>
+                        <th>类型</th>
+                        <th>说明</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>data</td>
+                        <td>Object</td>
+                        <td>反馈数据</td>
+                    </tr>
+                    <tr>
+                        <td>data.name</td>
+                        <td>String</td>
+                        <td>通话联系人</td>
+                    </tr>
+                    <tr>
+                        <td>data.number</td>
+                        <td>String</td>
+                        <td>通话号码</td>
+                    </tr>
+                    <tr>
+                        <td>data.date</td>
+                        <td>String</td>
+                        <td>通话时间</td>
+                    </tr>
+                    <tr>
+                        <td>data.duration</td>
+                        <td>String</td>
+                        <td>通话时长</td>
+                    </tr>
+                    <tr>
+                        <td>data.type</td>
+                        <td>String</td>
+                        <td>通话类型</td>
+                    </tr>
+                    <tr>
+                        <td>code</td>
+                        <td>Number</td>
+                        <td>调用反馈标识，成功：0 ；失败：-1</td>
+                    </tr>
+                    <tr>
+                        <td>msg</td>
+                        <td>String</td>
+                        <td>调用失败反馈信息</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p><strong>示例代码：</strong></p>
+                <pre><code class="lang-javascript">tqb.getCallHistory({
+  success: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span
+                            class="hljs-params">res</span>) </span>{
+    <span class="hljs-keyword">if</span> (res.code==0) {
+        <span class="hljs-built_in">console</span>.log(res.data)
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-built_in">console</span>.log(res.errMsg)
+    }
+  }
+})
+</code></pre>
+
+            </section>
+        </div>
+        <div class="page-inner" id="getSmsHistory">
+            <section class="normal markdown-section">
+                <h3>getSmsHistory(OBJECT)</h3>
+                <p>获取短信记录</p>
+                <p><strong>OBJECT 参数说明：</strong></p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>参数</th>
+                        <th>类型</th>
+                        <th>必填</th>
+                        <th>说明</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>success</td>
+                        <td>Function</td>
+                        <td>否</td>
+                        <td>接口调用成功的回调函数</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p><strong>success返回参数说明：</strong></p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>参数</th>
+                        <th>类型</th>
+                        <th>说明</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>data</td>
+                        <td>Object</td>
+                        <td>反馈数据</td>
+                    </tr>
+                    <tr>
+                        <td>data._id</td>
+                        <td>String</td>
+                        <td>短信序号，如100</td>
+                    </tr>
+                    <tr>
+                        <td>data.address</td>
+                        <td>String</td>
+                        <td>收件人/发件人号码</td>
+                    </tr>
+                    <tr>
+                        <td>data.body</td>
+                        <td>String</td>
+                        <td>短信内容</td>
+                    </tr>
+                    <tr>
+                        <td>data.person</td>
+                        <td>String</td>
+                        <td>联系人姓名列表序号</td>
+                    </tr>
+                    <tr>
+                        <td>data.date</td>
+                        <td>String</td>
+                        <td>日期，long型，如1346988516，可以对格式进行设置</td>
+                    </tr><tr>
+                        <td>data.protocol</td>
+                        <td>String</td>
+                        <td>对话的序号，如100，与同一个手机号互发短信，其序号相同</td>
+                    </tr>
+                    <tr>
+                        <td>data.read</td>
+                        <td>String</td>
+                        <td>是否阅读,未读：0；已读：1</td>
+                    </tr>
+                    <tr>
+                        <td>data.status</td>
+                        <td>String</td>
+                        <td>短信类型,已接收：1；已发送：2</td>
+                    </tr>
+                    <tr>
+                        <td>data.type</td>
+                        <td>String</td>
+                        <td>短信类型,已接收：1；已发送：2</td>
+                    </tr>
+                    <tr>
+                        <td>data.service_center</td>
+                        <td>String</td>
+                        <td>短信服务中心号码编号</td>
+                    </tr>
+                    <tr>
+                        <td>code</td>
+                        <td>Number</td>
+                        <td>调用反馈标识，成功：0 ；失败：-1</td>
+                    </tr>
+                    <tr>
+                        <td>msg</td>
+                        <td>String</td>
+                        <td>调用失败反馈信息</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p><strong>示例代码：</strong></p>
+                <pre><code class="lang-javascript">tqb.getSmsHistory({
+  success: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span
+                            class="hljs-params">res</span>) </span>{
+    <span class="hljs-keyword">if</span> (res.code==0) {
+        <span class="hljs-built_in">console</span>.log(res.data)
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-built_in">console</span>.log(res.errMsg)
+    }
+  }
+})
+</code></pre>
+
+            </section>
+        </div>
+        <div class="page-inner" id="setNavbarRightBtn">
+            <section class="normal markdown-section">
+                <h3>setNavbarRightBtn(OBJECT)</h3>
+                <p>右上角设置按钮,点击实现对应功能</p>
+                <p><strong>OBJECT 参数说明：</strong></p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>参数</th>
+                        <th>类型</th>
+                        <th>必填</th>
+                        <th>说明</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>frontColor</td>
+                        <td>String</td>
+                        <td>否</td>
+                        <td>字体颜色</td>
+                    </tr>
+                    <tr>
+                        <td>title</td>
+                        <td>String</td>
+                        <td>否</td>
+                        <td>按钮文字</td>
+                    </tr>
+                    <tr>
+                        <td>imageUrl</td>
+                        <td>String</td>
+                        <td>否</td>
+                        <td>按钮背景图片</td>
+                    </tr>
+                    <tr>
+                        <td>activePath</td>
+                        <td>String</td>
+                        <td>否</td>
+                        <td>有效域名</td>
+                    </tr>
+                    <tr>
+                        <td>success</td>
+                        <td>Function</td>
+                        <td>否</td>
+                        <td>接口调用成功的回调函数</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p><strong>success返回参数说明：</strong></p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>参数</th>
+                        <th>类型</th>
+                        <th>说明</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>code</td>
+                        <td>Number</td>
+                        <td>调用反馈标识，成功：0 ；失败：-1</td>
+                    </tr>
+                    <tr>
+                        <td>msg</td>
+                        <td>String</td>
+                        <td>调用失败反馈信息</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p><strong>示例代码：</strong></p>
+                <pre><code class="lang-javascript">tqb.navigateTo({
+    frontColor: <span class="hljs-string">'#dddddd'</span>，
+    title: <span class="hljs-string">'确定'</span>，
+    imageUrl:<span class="hljs-string">'url'</span>，
+    activePath: <span class="hljs-string">'路径'</span>
+})
+</code></pre>
+
+            </section>
+        </div>
+        <div class="page-inner" id="redirectto">
+            <section class="normal markdown-section">
+                <h3>redirectTo(OBJECT)</h3>
+                <p>关闭当前页面，跳转到应用内的某个页面。</p>
+                <p><strong>OBJECT 参数说明：</strong></p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>参数</th>
+                        <th>类型</th>
+                        <th>必填</th>
+                        <th>说明</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>url</td>
+                        <td>String</td>
+                        <td>是</td>
+                        <td>需要跳转的URL地址
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>success</td>
+                        <td>Function</td>
+                        <td>否</td>
+                        <td>接口调用成功的回调函数</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p><strong>success返回参数说明：</strong></p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>参数</th>
+                        <th>类型</th>
+                        <th>说明</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>code</td>
+                        <td>Number</td>
+                        <td>调用反馈标识，成功：0 ；失败：-1</td>
+                    </tr>
+                    <tr>
+                        <td>msg</td>
+                        <td>String</td>
+                        <td>调用失败反馈信息</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p><strong>示例代码：</strong></p>
+                <pre><code class="lang-javascript">tqb.redirectTo({
+  url: <span class="hljs-string">'http://www.taoqian123.com/test/test?id=1'</span>
+})
+</code></pre>
+
+
+            </section>
+        </div>
+        <div class="page-inner" id="navigateback">
+            <section class="normal markdown-section">
+                <h3>navigateBack(OBJECT)</h3>
+                <p>关闭当前页面，返回上一页面或多级页面。
+                <p><strong>OBJECT 参数说明：</strong></p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>参数</th>
+                        <th>类型</th>
+                        <th>默认值</th>
+                        <th>说明</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>delta</td>
+                        <td>Number</td>
+                        <td>1</td>
+                        <td>返回的页面数，如果 delta 大于现有页面数，则返回到首页。</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p><strong>success返回参数说明：</strong></p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>参数</th>
+                        <th>类型</th>
+                        <th>说明</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>code</td>
+                        <td>Number</td>
+                        <td>调用反馈标识，成功：0 ；失败：-1</td>
+                    </tr>
+                    <tr>
+                        <td>msg</td>
+                        <td>String</td>
+                        <td>调用失败反馈信息</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p><strong>示例代码：</strong></p>
+                <pre><code class="lang-javascript"><span class="hljs-comment"></span>
+
+<span class="hljs-comment">// 此处是A页面</span>
+tqb.navigateTo({
+  url: <span class="hljs-string">'B?id=1'</span>
+})
+
+<span class="hljs-comment">// 此处是B页面</span>
+tqb.navigateTo({
+  url: <span class="hljs-string">'C?id=1'</span>
+})
+
+<span class="hljs-comment">// 在C页面内 navigateBack，将返回A页面</span>
+tqb.navigateBack({
+  delta: <span class="hljs-number">2</span>
+})
+</code></pre>
+
+            </section>
+        </div>
+        <!-- 获取通讯录 -->
+        <div class="page-inner" id="getaddressbook">
+            <section class="normal markdown-section">
+                <h3>getAddressBook(OBJECT)</h3>
+                <p>调用接口获取通讯录信息</p>
+                <p><strong>OBJECT参数说明：</strong></p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>参数名</th>
+                        <th>类型</th>
+                        <th>必填</th>
+                        <th>说明</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>success</td>
+                        <td>Function</td>
+                        <td>否</td>
+                        <td>接口调用成功的回调函数</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p><strong>success返回参数说明：</strong></p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>参数</th>
+                        <th>类型</th>
+                        <th>说明</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>data</td>
+                        <td>Array</td>
+                        <td>通讯录数组</td>
+                    </tr>
+                    <tr>
+                        <td>code</td>
+                        <td>Number</td>
+                        <td>调用反馈标识，成功：0 ；失败：-1</td>
+                    </tr>
+                    <tr>
+                        <td>msg</td>
+                        <td>String</td>
+                        <td>调用失败反馈信息</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p><strong>示例代码：</strong></p>
+                <pre><code class="lang-javascript">
+tqb.getAddressBook({
+  success: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span
+                        class="hljs-params">res</span>) </span>{
+     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">res</span>)
+  }
+})
+</code></pre>
+
+            </section>
+
+        </div>
+        <div class="page-inner" id="getContact">
+            <section class="normal markdown-section">
+                <h3>getContact(OBJECT)</h3>
+                <p>调用接口获取单个通讯录</p>
+                <p><strong>OBJECT参数说明：</strong></p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>参数名</th>
+                        <th>类型</th>
+                        <th>必填</th>
+                        <th>说明</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>success</td>
+                        <td>Function</td>
+                        <td>否</td>
+                        <td>接口调用成功的回调函数</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p><strong>success返回参数说明：</strong></p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>参数</th>
+                        <th>类型</th>
+                        <th>说明</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>data</td>
+                        <td>Array</td>
+                        <td>联系人数组</td>
+                    </tr>
+                    <tr>
+                        <td>code</td>
+                        <td>Number</td>
+                        <td>调用反馈标识，成功：0 ；失败：-1</td>
+                    </tr>
+                    <tr>
+                        <td>msg</td>
+                        <td>String</td>
+                        <td>调用失败反馈信息</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p><strong>示例代码：</strong></p>
+                <pre><code class="lang-javascript">
+tqb.getContact({
+  success: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span
+                        class="hljs-params">res</span>) </span>{
+     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">res</span>)
+  }
+})
+</code></pre>
+
+            </section>
+
+        </div>
+        <!--  用户相关  -->
+        <div class="page-inner" id="login">
+            <section class="normal markdown-section">
+                <h3>login(OBJECT)</h3>
+                <p>调用接口调出淘钱宝登录页面</p>
+                <p><strong>OBJECT参数说明：</strong></p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>参数名</th>
+                        <th>类型</th>
+                        <th>必填</th>
+                        <th>说明</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>success</td>
+                        <td>Function</td>
+                        <td>否</td>
+                        <td>接口调用成功的回调函数</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p><strong>success返回参数说明：</strong></p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>参数</th>
+                        <th>类型</th>
+                        <th>说明</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>code</td>
+                        <td>Number</td>
+                        <td>调用反馈标识，成功：0 ；失败：-1</td>
+                    </tr>
+                    <tr>
+                        <td>msg</td>
+                        <td>String</td>
+                        <td>调用失败反馈信息</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p><strong>示例代码：</strong></p>
+                <pre><code class="lang-javascript">
+tqb.login({
+  success: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span
+                        class="hljs-params">res</span>) </span>{
+    <span class="hljs-keyword">if</span> (res.code==0) {
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'用户登录成功！'</span>)
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'用户登录态失败！'</span> + res.errMsg)
+    }
+  }
+})
+</code></pre>
+
+            </section>
+        </div>
+        <div class="page-inner" id="logout">
+            <section class="normal markdown-section">
+                <h3>logout(OBJECT)</h3>
+                <p>调用接口注销淘钱宝账号登陆状态</p>
+                <p><strong>OBJECT参数说明：</strong></p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>参数名</th>
+                        <th>类型</th>
+                        <th>必填</th>
+                        <th>说明</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>success</td>
+                        <td>Function</td>
+                        <td>否</td>
+                        <td>接口调用成功的回调函数</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p><strong>success返回参数说明：</strong></p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>参数</th>
+                        <th>类型</th>
+                        <th>说明</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>code</td>
+                        <td>Number</td>
+                        <td>调用反馈标识，成功：0 ；失败：-1</td>
+                    </tr>
+                    <tr>
+                        <td>msg</td>
+                        <td>String</td>
+                        <td>调用失败反馈信息</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p><strong>示例代码：</strong></p>
+                <pre><code class="lang-javascript">
+tqb.logout({
+  success: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span
+                        class="hljs-params">res</span>) </span>{
+    <span class="hljs-keyword">if</span> (res.code==0) {
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'注销登陆成功！'</span>)
+    } <span class="hljs-keyword">else</span> {
+         <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'注销登陆失败！'</span> + res.errMsg)
+    }
+  }
+})
+</code></pre>
+
+            </section>
+        </div>
+        <div class="page-inner" id="getDeviceInfo">
+            <section class="normal markdown-section">
+                <h3>getDeviceInfo(OBJECT)</h3>
+                <p>获取设备相关信息</p>
+                <p><strong>OBJECT参数说明：</strong></p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>参数名</th>
+                        <th>类型</th>
+                        <th>必填</th>
+                        <th>说明</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>success</td>
+                        <td>Function</td>
+                        <td>否</td>
+                        <td>接口调用成功的回调函数</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p><strong>success返回参数说明：</strong></p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>参数</th>
+                        <th>类型</th>
+                        <th>说明</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>data</td>
+                        <td>Object</td>
+                        <td>返回数据对象</td>
+                    </tr>
+                    <tr>
+                        <td>data.platform</td>
+                        <td>String</td>
+                        <td>手机型号</td>
+                    </tr>
+                    <tr>
+                        <td>data.osVer</td>
+                        <td>String</td>
+                        <td>手机系统版本</td>
+                    </tr>
+                    <tr>
+                        <td>data.appVer</td>
+                        <td>String</td>
+                        <td>APP 版本</td>
+                    </tr>
+                    <tr>
+                        <td>data.wifissid</td>
+                        <td>String</td>
+                        <td>获取当前Wifi的SSID,可能没有数据</td>
+                    </tr>
+                    <tr>
+                        <td>data.macAddress</td>
+                        <td>String</td>
+                        <td>IOS 不能获取,安卓需要</td>
+                    </tr>
+                    <tr>
+                        <td>data.SIMcarrier</td>
+                        <td>String</td>
+                        <td>SIM 卡的运营商</td>
+                    </tr>
+                    <tr>
+                        <td>data.netWorkType</td>
+                        <td>String</td>
+                        <td>wifi/2g/3g/4g</td>
+                    </tr>
+                    <tr>
+                        <td>data.imei</td>
+                        <td>String</td>
+                        <td>IOS 的 IDFA, 安卓的 IME</td>
+                    </tr>
+                    <tr>
+                        <td>data.phone</td>
+                        <td>String</td>
+                        <td>安卓直接从 SIM 卡读取的手机号</td>
+                    </tr>
+                    <tr>
+                        <td>code</td>
+                        <td>Number</td>
+                        <td>调用反馈标识，成功：0 ；失败：-1</td>
+                    </tr>
+                    <tr>
+                        <td>msg</td>
+                        <td>String</td>
+                        <td>调用失败反馈信息</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p><strong>示例代码：</strong></p>
+                <pre><code class="lang-javascript">
+tqb.getDeviceInfo({
+  success: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span
+                        class="hljs-params">res</span>) </span>{
+
+  }
+})
+</code></pre>
+
+            </section>
+        </div>
+        <div class="page-inner" id="getuserinfo">
+            <section class="normal markdown-section">
+                <h3>getUserInfo(OBJECT)</h3>
+                <p>调用接口获取淘钱宝用户登录后的基本信息</p>
+                <p><strong>OBJECT参数说明：</strong></p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>参数名</th>
+                        <th>类型</th>
+                        <th>必填</th>
+                        <th>说明</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>success</td>
+                        <td>Function</td>
+                        <td>否</td>
+                        <td>接口调用成功的回调函数</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p><strong>success返回参数说明：</strong></p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>参数</th>
+                        <th>类型</th>
+                        <th>说明</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>data</td>
+                        <td>Object</td>
+                        <td>返回数据对象</td>
+                    </tr>
+                    <tr>
+                        <td>data.accesstoken</td>
+                        <td>String</td>
+                        <td>访问令牌</td>
+                    </tr>
+                    <tr>
+                        <td>data.font</td>
+                        <td>Number</td>
+                        <td>前端类型 :0=pc 1=wap 2=ios 3=android</td>
+                    </tr>
+                    <tr>
+                        <td>data.channel_id</td>
+                        <td>String</td>
+                        <td>渠道Id ,安卓/wap使用</td>
+                    </tr>
+                    <tr>
+                        <td>data.city_id</td>
+                        <td>String</td>
+                        <td>内部城市 Id</td>
+                    </tr>
+                    <tr>
+                        <td>data.session_id</td>
+                        <td>String</td>
+                        <td>session Id</td>
+                    </tr>
+                    <tr>
+                        <td>data.appver</td>
+                        <td>String</td>
+                        <td>APP 版本</td>
+                    </tr>
+                    <tr>
+                        <td>data.registration_id</td>
+                        <td>String</td>
+                        <td>registration_id,jpush id</td>
+                    </tr>
+                    <tr>
+                        <td>data.deviceToken</td>
+                        <td>String</td>
+                        <td>推送 token</td>
+                    </tr>
+                    <tr>
+                        <td>data.imei</td>
+                        <td>String</td>
+                        <td>ios 的 IDFA, 安卓的 IMEI</td>
+                    </tr>
+                    <tr>
+                        <td>code</td>
+                        <td>Number</td>
+                        <td>调用反馈标识，成功：0 ；失败：-1</td>
+                    </tr>
+                    <tr>
+                        <td>msg</td>
+                        <td>String</td>
+                        <td>调用失败反馈信息</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p><strong>示例代码：</strong></p>
+                <pre><code class="lang-javascript">
+tqb.getUserInfo({
+  success: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span
+                        class="hljs-params">res</span>) </span>{
+    <span class="hljs-keyword">if</span> (res.code==0) {
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'获取用户信息成功！'</span> + res.data)
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'获取用户信息态失败！'</span> + res.errMsg)
+    }
+  }
+})
+</code></pre>
+
+            </section>
+        </div>
+        <div class="page-inner" id="register">
+            <section class="normal markdown-section">
+                <h3>register(OBJECT)</h3>
+                <p>注册</p>
+                <p><strong>OBJECT参数说明：</strong></p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>参数名</th>
+                        <th>类型</th>
+                        <th>必填</th>
+                        <th>说明</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>idenify</td>
+                        <td>String</td>
+                        <td>是</td>
+                        <td>用于标记注册的用户的 拓展数据,可用于 推广渠道的标记,建议使用 json 化的字符串</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p><strong>success返回参数说明：</strong></p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>参数</th>
+                        <th>类型</th>
+                        <th>说明</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>code</td>
+                        <td>Number</td>
+                        <td>调用反馈标识，成功：0 ；失败：-1</td>
+                    </tr>
+                    <tr>
+                        <td>msg</td>
+                        <td>String</td>
+                        <td>调用失败反馈信息</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p><strong>示例代码：</strong></p>
+                <pre><code class="lang-javascript">
+tqb.register({
+  success: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span
+                        class="hljs-params">res</span>) </span>{
+    <span class="hljs-keyword">if</span> (res.code==0) {
+        <span class="hljs-built_in">console</span>.log(res.data)
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-built_in">console</span>.log(res.errMsg)
+    }
+  }
+})
+</code></pre>
+
+            </section>
+        </div>
+        <div class="page-inner" id="jsProxyVer">
+            <section class="normal markdown-section">
+                <h3>jsProxyVer(OBJECT)</h3>
+                <p>获取协议版本</p>
+                <p><strong>OBJECT参数说明：</strong></p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>参数名</th>
+                        <th>类型</th>
+                        <th>必填</th>
+                        <th>说明</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>success</td>
+                        <td>Function</td>
+                        <td>否</td>
+                        <td>接口调用成功的回调函数</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p><strong>success返回参数说明：</strong></p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>参数</th>
+                        <th>类型</th>
+                        <th>说明</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>code</td>
+                        <td>Number</td>
+                        <td>调用反馈标识，成功：0 ；失败：-1</td>
+                    </tr>
+                    <tr>
+                        <td>msg</td>
+                        <td>String</td>
+                        <td>调用失败反馈信息</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p><strong>示例代码：</strong></p>
+                <pre><code class="lang-javascript">
+tqb.jsProxyVer({
+  success: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span
+                        class="hljs-params">res</span>) </span>{
+    <span class="hljs-keyword">if</span> (res.code==0) {
+        <span class="hljs-built_in">console</span>.log(res.data)
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-built_in">console</span>.log(res.errMsg)
+    }
+  }
+})
+</code></pre>
+
+            </section>
+        </div>
+        <!--  分享  -->
+        <div class="page-inner" id="shareinfo">
+            <section class="normal markdown-section">
+                <h3>shareInfo(OBJECT)</h3>
+                <p>调用淘钱宝分享菜单</p>
+                <p><strong>OBJECT参数说明：</strong></p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>参数名</th>
+                        <th>类型</th>
+                        <th>必填</th>
+                        <th>说明</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>title</td>
+                        <td>String</td>
+                        <td>是</td>
+                        <td>分享的标题</td>
+                    </tr>
+                    <tr>
+                        <td>text</td>
+                        <td>String</td>
+                        <td>否</td>
+                        <td>分享的内容</td>
+                    </tr>
+                    <tr>
+                        <td>image</td>
+                        <td>String</td>
+                        <td>是</td>
+                        <td>分享的预览图片</td>
+                    </tr>
+                    <tr>
+                        <td>url</td>
+                        <td>String</td>
+                        <td>是</td>
+                        <td>分享的URL地址</td>
+                    </tr>
+                    <tr>
+                        <td>success</td>
+                        <td>Function</td>
+                        <td>否</td>
+                        <td>分享成功的回调函数</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p><strong>success返回参数说明：</strong></p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>参数名</th>
+                        <th>类型</th>
+                        <th>说明</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>type</td>
+                        <td>String</td>
+                        <td>wechat / weibo/ qq 分享类型</td>
+                    </tr>
+                    <tr>
+                        <td>result</td>
+                        <td>boolean</td>
+                        <td>true / false 是否分享成功</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p><strong>示例代码：</strong></p>
+                <pre><code class="lang-javascript">
+tqb.shareInfo({
+  title: '标题',
+  text: '内容',
+  images: '预览图片',
+  url: '地址',
+  success: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span
+                        class="hljs-params">res</span>) { </span>
+  }
+})
+</code></pre>
+
+            </section>
+        </div>
+        <!--相关-->
+        <div class="page-inner" id="web">
+            <section class="normal markdown-section">
+                <h3>淘钱宝API相关</h3>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>名称</th>
+                        <th>地址</th>
+                        <th>相关</th>
+                    </tr>
+                    </thead>
+                    <tbody id="api_btn">
+                    <tr>
+                        <td>JS 交互规则API</td>
+                        <td>http://test.taoqian123.com.cn</td>
+                        <td><a href="http://test.taoqian123.com.cn/api/">前往</a></td>
+                    </tr>
+                    <tr>
+                        <td>测试网页</td>
+                        <td>http://test.taoqian123.com.cn</td>
+                        <td><a href="http://test.taoqian123.com.cn">前往</a></td>
+                    </tr>
+                    <tr>
+                        <td>Android Demo</td>
+                        <td>http://test.taoqian123.com.cn/tqb-Android-WebBridgeDemo.zip</td>
+                        <td><a href="http://test.taoqian123.com.cn/tqb-Android-WebBridgeDemo.zip">下载</a></td>
+                    </tr>
+                    <tr>
+                        <td>IOS Demo</td>
+                        <td>http://test.taoqian123.com.cn/tqb-ios-JSBridgeDemo_02.zip</td>
+                        <td><a href="http://test.taoqian123.com.cn/tqb-ios-JSBridgeDemo_02.zip">下载</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </section>
+        </div>
+    </div>
+</div>
+</body>
+</html>

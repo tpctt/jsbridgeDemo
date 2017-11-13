@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>淘钱宝 API Demo</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <style>
+        html, body, table, tr, td, h2 {
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            background-color: transparent;
+        }
+
+        body {
+            padding-bottom: 8%;
+        }
+
+        #content {
+            width: 96%;
+            margin: 0 auto;
+            padding: 0 2%;
+        }
+
+        h1 {
+            width: 100%;
+            text-indent: 10px;
+            font-size: 20px;
+            font-weight: bolder;
+            color: #373e41;
+            padding: 13px 0 20px;
+            line-height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #fff;
+            border-bottom: 1px solid #e2e2e2;
+            box-shadow: 0 0 20px #e2e2e2;
+            margin: 0;
+        }
+
+        h2 {
+            font-size: 16px;
+            font-weight: bold;
+            color: #4f575a;
+            margin: 13px 0 20px;
+            line-height: 100%;
+        }
+
+        table {
+            border-bottom: 1px solid #ededed;
+            color: #757575;
+            font-size: 12px;
+            line-height: 2;
+            margin: 0 0 26px;
+            width: 100%;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        tbody {
+            display: table-row-group;
+            vertical-align: middle;
+            border-color: inherit;
+            border-bottom: 1px solid #ededed;
+        }
+
+        tr {
+            display: table-row;
+            vertical-align: inherit;
+            border-color: inherit;
+            border-bottom: 1px solid #ededed;
+        }
+
+        td {
+            border-top: 1px solid #ededed;
+            padding: 6px 10px 6px 0;
+        }
+
+        td, th {
+            display: table-cell;
+            vertical-align: inherit;
+        }
+
+        td:nth-of-type(odd) {
+            width: 60%;
+        }
+
+        button {
+            color: #fff;
+            background-color: #3bb4f2;
+            border-color: #3bb4f2;
+            padding: 6px 8px;
+            text-align: center;
+            white-space: nowrap;
+            cursor: pointer;
+            outline: 0;
+            border-radius: 3px;
+        }
+
+        #bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 98;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: none;
+        }
+
+        #modelBox {
+            position: relative;
+            width: 80%;
+            height: 40%;
+            margin: 0 auto;
+            margin-top: 40%;
+            background: #f8f8f8;
+            transition: all 0.4s;
+            word-wrap: break-word;
+        }
+
+        #close {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 34px;
+            line-height: 34px;
+            font-size: 16px;
+            color: #0e90d2;
+            border-top: 1px solid #dedede;
+            text-align: center;
+            cursor: pointer;
+            background-color: #fff;
+        }
+
+        #model {
+            width: 90%;
+            max-height: 80%;
+            margin: 0 auto;
+            padding: 10px;
+            overflow: auto;
+        }
+
+        #model img {
+            width: 90%;
+        }
+
+        button {
+            border: 0;
+        }
+    </style>
+</head>
+<body>
+<script>
+    function Tqbapi() {
+
+        var This = this;
+
+        function testing(data, nameArr) {
+            if (data == undefined && nameArr.length == 0) {
+                alert("没有必填字段，允许调用");
+                return true
+            }
+            if (data) {
+                for (var i = 0; i < nameArr.length; i++) {
+                    if (data.hasOwnProperty(nameArr[i]) === false) {
+                        alert(nameArr[i] + ":必填参数缺失");
+                        return false
+                    }
+                }
+                return true
+            } else {
+                alert("没有参数");
+                return false
+            }
+        }
+
+        function fn() {
+            //无回调
+        }
+
+        function setupWebViewJavascriptBridge(callback) {
+            if (window.TQBBridge) {
+                return callback(TQBBridge);
+            }
+            if (window.WebViewJavascriptBridge) {
+                return callback(WebViewJavascriptBridge);
+            }
+            if (window.WVJBCallbacks) {
+                return window.WVJBCallbacks.push(callback);
+            }
+            window.WVJBCallbacks = [callback];
+            var WVJBIframe = document.createElement('iframe');
+            WVJBIframe.style.display = 'none';
+            WVJBIframe.src = 'https://__bridge_loaded__';
+            document.documentElement.appendChild(WVJBIframe);
+            setTimeout(function () {
+                document.documentElement.removeChild(WVJBIframe)
+            }, 0)
+        }
+
+        setupWebViewJavascriptBridge(function (bridge) {
+            //注册原生调起js方法
+            //参数1： buttonjs 注册flag 供原生使用，要和原生统一
+            //参数2： data  是原生传给js 的数据
+            //参数3： responseCallback 是js 的回调，可以通过该方法给原生传数据
+            /*bridge.registerHandler("getUserInfos",function(data,responseCallback){
+             responseCallback("button js callback");
+             });*/
+
+            /*bridge.registerHandler("setNavbarRightBtn2", function (data, responseCallback) {
+             model.innerHTML = "app回调函数前";
+             show();
+             responseCallback("APP调起js反馈flag");
+             });*/
+
+            This.setNavbarRightBtn2 = function (obj) {
+                bridge.registerHandler("setNavbarRightBtn2", function (data, responseCallback) {
+                    if (testing(obj, [])) {
+                        if (obj.hasOwnProperty("success") === true) {
+                            if (obj.hasOwnProperty("info") === true) {
+                                obj.success(obj.info);
+                            } else {
+                                obj.success();
+                            }
+                        }
+                        if (obj.hasOwnProperty("data") === true) {
+                            responseCallback(obj.data);
+                        }
+                    }
+                });
+            };
+
+
+            //注册js调起原生方法
+            //参数1： pay 注册flag 供原生使用，要和原生统一
+            //参数2： 是调起原生时向原生传递的参数
+            //参数3： 原生调用回调返回的数据
+            This.chooseImage = function (data) {
+                return function () {
+                    if (testing(data, ["success"])) {
+                        console.log(111);
+                        bridge.callHandler('chooseImage', data, function (responseData) {
+                            data.success(JSON.parse(responseData));
+
+                        });
+                    }
+                }
+            };
+            This.previewImage = function (data) {
+                return function () {
+                    if (testing(data, ["urls"])) {
+                        if (!data.hasOwnProperty("success")) {
+                            data.success = fn;
+                        }
+                        bridge.callHandler('previewImage', data, function (responseData) {
+                            data.success(JSON.parse(responseData));
+                        });
+                    }
+                }
+            };
+            This.getLocation = function (data) {
+                return function () {
+                    if (testing(data, ["success"])) {
+                        bridge.callHandler('getLocation', data, function (responseData) {
+                            data.success(JSON.parse(responseData));
+                        });
+                    }
+                }
+            };
+            This.makePhoneCall = function (data) {
+                return function () {
+                    if (testing(data, ["phoneNumber"])) {
+                        if (!data.hasOwnProperty("success")) {
+                            data.success = fn;
+                        }
+                        bridge.callHandler('makePhoneCall', data, function (responseData) {
+                            data.success(JSON.parse(responseData));
+                        });
+                    }
+                }
+            };
+            This.setClipboardData = function (data) {
+                return function () {
+                    if (testing(data, ["data"])) {
+                        if (!data.hasOwnProperty("success")) {
+                            data.success = fn;
+                        }
+                        bridge.callHandler('setClipboardData', data.data, function (responseData) {
+                            data.success(JSON.parse(responseData));
+                        });
+                    }
+                }
+            };
+            This.getClipboardData = function (data) {
+                return function () {
+                    if (testing(data, ["success"])) {
+                        bridge.callHandler('getClipboardData', data, function (responseData) {
+                            data.success(JSON.parse(responseData));
+                        });
+                    }
+                }
+            };
+            This.setNavigationBarTitle = function (data) {
+                return function () {
+                    if (testing(data, ["title"])) {
+                        if (!data.hasOwnProperty("success")) {
+                            data.success = fn;
+                        }
+                        bridge.callHandler('setNavigationBarTitle', data, function (responseData) {
+                            data.success(JSON.parse(responseData));
+                        });
+                    }
+                }
+            };
+            This.setNavigationBarColor = function (data) {
+                return function () {
+                    if (testing(data, ["frontColor", "backgroundColor"])) {
+                        if (!data.hasOwnProperty("success")) {
+                            data.success = fn;
+                        }
+                        bridge.callHandler('setNavigationBarColor', data, function (responseData) {
+                            data.success(JSON.parse(responseData));
+                        });
+                    }
+                }
+            };
+            This.showNavigationBar = function () {
+                return function () {
+                    bridge.callHandler('showNavigationBar', {}, fn());
+                }
+            };
+            This.hideNavigationBar = function () {
+                return function () {
+                    bridge.callHandler('hideNavigationBar', {}, fn());
+                }
+            };
+            This.navigateTo = function (data) {
+                return function () {
+                    if (testing(data, ["url"])) {
+                        if (!data.hasOwnProperty("success")) {
+                            data.success = fn;
+                        }
+                        bridge.callHandler('navigateTo', data, function (responseData) {
+                            data.success(JSON.parse(responseData));
+                        });
+                    }
+                }
+            };
+            This.redirectTo = function (data) {
+                return function () {
+                    if (testing(data, ["url"])) {
+                        if (!data.hasOwnProperty("success")) {
+                            data.success = fn;
+                        }
+                        bridge.callHandler('redirectTo', data, function (responseData) {
+                            data.success(responseData);
+                        });
+                    }
+                }
+            };
+            This.navigateBack = function (data) {
+                return function () {
+                    if (testing(data, ["delta"])) {
+                        if (!data.hasOwnProperty("success")) {
+                            data.success = fn;
+                        }
+                        bridge.callHandler('navigateBack', data, function (responseData) {
+                            data.success(JSON.parse(responseData));
+                        });
+                    }
+                }
+            };
+            This.getAddressBook = function (data) {
+                return function () {
+                    if (testing(data, [])) {
+                        if (data.hasOwnProperty("success") === false) {
+                            data.success = fn;
+                        }
+                        bridge.callHandler('getAddressBook', data, function (responseData) {
+                            data.success(JSON.parse(responseData));
+                        });
+                    }
+                }
+            };
+            This.getContact = function (data) {
+                return function () {
+                    if (testing(data, [])) {
+                        if (data.hasOwnProperty("success") === false) {
+                            data.success = fn;
+                        }
+                        bridge.callHandler('getContact', data, function (responseData) {
+                            data.success(JSON.parse(responseData));
+                        });
+                    }
+                }
+            };
+            This.login = function (data) {
+                return function () {
+                    if (testing(data, [])) {
+                        if (!data.hasOwnProperty("success")) {
+                            data.success = fn;
+                        }
+                        bridge.callHandler('login', data, function (responseData) {
+                            data.success(JSON.parse(responseData));
+                        });
+                    }
+                }
+            };
+            This.logout = function (data) {
+                return function () {
+                    if (testing(data, [])) {
+                        if (!data.hasOwnProperty("success")) {
+                            data.success = fn;
+                        }
+                        bridge.callHandler('logout', data, function (responseData) {
+                            data.success(JSON.parse(responseData));
+                        });
+                    }
+                }
+            };
+            This.getDeviceInfo = function (data) {
+                return function () {
+                    if (testing(data, [])) {
+                        if (!data.hasOwnProperty("success")) {
+                            data.success = fn;
+                        }
+                        bridge.callHandler('getDeviceInfo', data, function (responseData) {
+                            data.success(JSON.parse(responseData));
+                        });
+                    }
+                }
+            };
+            This.getUserInfo = function (data) {
+                return function () {
+                    if (testing(data, [])) {
+                        if (!data.hasOwnProperty("success")) {
+                            data.success = fn;
+                        }
+                        bridge.callHandler('getUserInfo', data, function (responseData) {
+                            data.success(JSON.parse(responseData));
+                        });
+                    }
+                }
+            };
+            This.shareInfo = function (data) {
+                return function () {
+                    if (testing(data, ["title", "image", "url"])) {
+                        if (!data.hasOwnProperty("success")) {
+                            data.success = fn;
+                        }
+                        bridge.callHandler('shareInfo', data, function (responseData) {
+                            data.success(JSON.parse(responseData));
+                        });
+                    }
+                }
+            };
+            This.openProductView = function (data) {
+                return function () {
+                    if (testing(data, ["success"])) {
+                        if (data.hasOwnProperty("success") === false) {
+                            data.success = fn;
+                        }
+                        bridge.callHandler('openProductView', data, function (responseData) {
+                            data.success(JSON.parse(responseData));
+                        });
+                    }
+                }
+            };
+            This.openDirectorView = function (data) {
+                return function () {
+                    if (testing(data, ["success"])) {
+                        if (data.hasOwnProperty("success") === false) {
+                            data.success = fn;
+                        }
+                        bridge.callHandler('openDirectorView', data, function (responseData) {
+                            data.success(JSON.parse(responseData));
+                        });
+                    }
+                }
+            };
+            This.openCreditCardView = function (data) {
+                return function () {
+                    if (testing(data, ["success"])) {
+                        if (data.hasOwnProperty("success") === false) {
+                            data.success = fn;
+                        }
+                        bridge.callHandler('openCreditCardView', data, function (responseData) {
+                            data.success(JSON.parse(responseData));
+                        });
+                    }
+                }
+            };
+            This.https = function (data) {
+                return function () {
+                    if (testing(data, ["success"])) {
+                        if (data.hasOwnProperty("success") === false) {
+                            data.success = fn;
+                        }
+                        bridge.callHandler('https', data, function (responseData) {
+                            data.success(JSON.parse(responseData));
+                        });
+                    }
+                }
+            };
+            This.register = function (data) {
+                return function () {
+                    if (testing(data, ["idenify"])) {
+                        if (data.hasOwnProperty("success") === false) {
+                            data.success = fn;
+                        }
+                        bridge.callHandler('register', data, function (responseData) {
+                            data.success(JSON.parse(responseData));
+                        });
+                    }
+                }
+            };
+            This.jsProxyVer = function (data) {
+                return function () {
+                    if (testing(data, [])) {
+                        if (!data.hasOwnProperty("success")) {
+                            data.success = fn;
+                        }
+                        bridge.callHandler('jsProxyVer', data, function (responseData) {
+                            data.success(JSON.parse(responseData));
+                        });
+                    }
+                }
+            };
+            This.setNavbarRightBtn = function (data) {
+                return function () {
+                    if (testing(data, ["frontColor", "title", "activePath"])) {
+                        if (data.hasOwnProperty("success") === false) {
+                            data.success = fn;
+                        }
+                        bridge.callHandler('setNavbarRightBtn', data, function (responseData) {
+                            data.success(JSON.parse(responseData));
+                        });
+                    }
+                }
+            };
+            This.getCallHistory = function (data) {
+                return function () {
+                    if (testing(data, [])) {
+                        if (data.hasOwnProperty("success") === false) {
+                            data.success = fn;
+                        }
+                        bridge.callHandler('getCallHistory', data, function (responseData) {
+                            data.success(JSON.parse(responseData));
+                        });
+                    }
+                }
+            };
+            This.getSmsHistory = function (data) {
+                return function () {
+                    if (testing(data, [])) {
+                        if (data.hasOwnProperty("success") === false) {
+                            data.success = fn;
+                        }
+                        bridge.callHandler('getSmsHistory', data, function (responseData) {
+                            data.success(JSON.parse(responseData));
+                        });
+                    }
+                }
+            };
+        });
+    }
+    function shut() {
+        bg.style.display = "none";
+    }
+    function show() {
+        bg.style.display = "block";
+    }
+    window.onload = function () {
+        var bg = document.querySelector("#bg");
+        var model = document.querySelector("#model");
+        var modelBox = document.querySelector("#modelBox");
+        var chooseImage = document.querySelector("#chooseImage");
+        var previewImage = document.querySelector("#previewImage");
+        var getLocation = document.querySelector("#getLocation");
+        var makePhoneCall = document.querySelector("#makePhoneCall");
+        var setClipboardData = document.querySelector("#setClipboardData");
+        var getClipboardData = document.querySelector("#getClipboardData");
+        var setNavigationBarTitle = document.querySelector("#setNavigationBarTitle");
+        var setNavigationBarColor = document.querySelector("#setNavigationBarColor");
+        var showNavigationBar = document.querySelector("#showNavigationBar");
+        var hideNavigationBar = document.querySelector("#hideNavigationBar");
+        var navigateTo = document.querySelector("#navigateTo");
+        var redirectTo = document.querySelector("#redirectTo");
+        var navigateBack = document.querySelector("#navigateBack");
+        var shareInfo = document.querySelector("#shareInfo");
+        var getAddressBook = document.querySelector("#getAddressBook");
+        var getContact = document.querySelector("#getContact ");
+        var login = document.querySelector("#login");
+        var getUserInfo = document.querySelector("#getUserInfo");
+        //var openProductView = document.querySelector("#openProductView");
+        //var openDirectorView=document.querySelector("#openDirectorView");
+        //var openCreditCardView=document.querySelector("#openCreditCardView");
+        //var https = document.querySelector("#https");
+        var logout = document.querySelector("#logout");
+        var getDeviceInfo = document.querySelector("#getDeviceInfo");
+        var chooseImage_camera = document.querySelector("#chooseImage_camera");
+        var chooseImage_album = document.querySelector("#chooseImage_album");
+        var register = document.querySelector("#register");
+        var jsProxyVer = document.querySelector("#jsProxyVer");
+        var setNavbarRightBtn = document.querySelector("#setNavbarRightBtn");
+        var getCallHistory = document.querySelector("#getCallHistory");
+        var getSmsHistory = document.querySelector("#getSmsHistory");
+
+        setTimeout(function () {
+            var tqbApi = new Tqbapi();
+            setTimeout(function () {
+                chooseImage.onclick = tqbApi.chooseImage({
+                    success: function (res) {
+                        if (res.code === -1) {
+                            model.innerHTML = res.msg;
+                        } else {
+                            model.innerHTML = "<img src='data:image/jpeg;base64," + res.data + "'>";
+                        }
+                        show();
+                    }
+                });
+                chooseImage_camera.onclick = tqbApi.chooseImage({
+                    sourceType: "camera",
+                    success: function (res) {
+                        if (res.code === -1) {
+                            model.innerHTML = res.msg;
+                        } else {
+                            model.innerHTML = "<img src='data:image/jpeg;base64," + res.data + "'>";
+                        }
+                        show();
+                    }
+                });
+                chooseImage_album.onclick = tqbApi.chooseImage({
+                    sourceType: "album",
+                    success: function (res) {
+                        if (res.code === -1) {
+                            model.innerHTML = res.msg;
+                        } else {
+                            model.innerHTML = "<img src='data:image/jpeg;base64," + res.data + "'>";
+                        }
+                        show();
+                    }
+                });
+                previewImage.onclick = tqbApi.previewImage({
+                    urls: ["http://tupian.enterdesk.com/2013/mxy/12/11/4/4.jpg", "http://imgsrc.baidu.com/imgad/pic/item/43a7d933c895d14386cd670079f082025aaf075d.jpg"],
+                    success: function (res) {
+                        if (res.code === -1) {
+                            model.innerHTML = res.msg;
+                        } else {
+                            model.innerHTML = "previewImage";
+                        }
+                        show();
+                    }
+                });
+                getLocation.onclick = tqbApi.getLocation({
+                    success: function (res) {
+                        if (res.code === -1) {
+                            model.innerHTML = res.msg;
+                        } else {
+                            model.innerHTML = res.data.address + "经度：" + res.data.longitude + "；纬度：" + res.data.latitude;
+                        }
+                        show();
+                    }
+                });
+                makePhoneCall.onclick = tqbApi.makePhoneCall({
+                    phoneNumber: '123456712434' //仅为示例，并非真实的电话号码
+                });
+                setClipboardData.onclick = tqbApi.setClipboardData({
+                    data: '淘钱宝API 设置剪贴板',
+                    success: function (res) {
+                        if (res.code === -1) {
+                            model.innerHTML = res.msg;
+                        } else {
+                            model.innerHTML = res.data;
+                        }
+                        show();
+                    }
+                });
+                getClipboardData.onclick = tqbApi.getClipboardData({
+                    success: function (res) {
+                        if (res.code === -1) {
+                            model.innerHTML = res.msg;
+                        } else {
+                            model.innerHTML = res.data;
+                        }
+                        show();
+                    }
+                });
+                setNavigationBarTitle.onclick = tqbApi.setNavigationBarTitle({
+                    title: '淘钱宝API demo'
+                });
+                setNavigationBarColor.onclick = tqbApi.setNavigationBarColor({
+                    frontColor: '#757575',
+                    backgroundColor: '#ffffff'
+                });
+                showNavigationBar.onclick = tqbApi.showNavigationBar();
+                hideNavigationBar.onclick = tqbApi.hideNavigationBar();
+                navigateTo.onclick = tqbApi.navigateTo({
+                    url: 'http://www.taoqian123.com/test/test?id=1',
+                });
+                redirectTo.onclick = tqbApi.redirectTo({
+                    url: 'http://www.taoqian123.com/test/test?id=1'
+                });
+                navigateBack.onclick = tqbApi.navigateBack({
+                    delta: 1
+                });
+                shareInfo.onclick = tqbApi.shareInfo({
+                    title: '淘钱宝API share',
+                    text: '淘钱宝API  分享 demo',
+                    image: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1502691442128&di=915543f2825e008c2dc8db86bb700a36&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2Fb8014a90f603738d59fe3507b91bb051f819ec5b.jpg',
+                    url: 'http://www.taoqian123.com/test/test?id=1',
+                    success: function (res) {
+                        if (res.code === -1) {
+                            model.innerHTML = res.msg;
+                        } else {
+                            model.innerHTML = res.data.msg;
+                        }
+                        show();
+                    }
+                });
+                getAddressBook.onclick = tqbApi.getAddressBook({
+                    success: function (res) {
+                        if (res.code === -1) {
+                            model.innerHTML = res.msg;
+                        } else {
+                            model.innerHTML = "共有联系人 " + res.data.length + " 位；其他数据详见API，此处不予展示。";
+                        }
+                        show();
+                    }
+                });
+                getContact.onclick = tqbApi.getContact({
+                    success: function (res) {
+                        if (res.code === -1) {
+                            model.innerHTML = res.msg;
+                        } else {
+                            model.innerHTML = res.data[0].username + "：" + res.data[0].phones;
+                        }
+                        show();
+                    }
+                });
+                login.onclick = tqbApi.login({
+                    success: function (res) {
+                        if (res.code === -1) {
+                            model.innerHTML = '用户登录失败！' + res.msg;
+                            show();
+                        }
+                    }
+                });
+                logout.onclick = tqbApi.logout({
+                    success: function (res) {
+                        if (res.code === -1) {
+                            model.innerHTML = '注销登陆失败：' + res.msg;
+                            show();
+                        }
+                    }
+                });
+                getDeviceInfo.onclick = tqbApi.getDeviceInfo({
+                    success: function (res) {
+                        if (res.code === -1) {
+                            model.innerHTML = res.msg;
+                        } else {
+                            model.innerHTML = "手机型号：" + res.data.platform + "；   手机系统：" + res.data.osVer + "；其他数据详见API，此处不予展示。";
+                        }
+                        show();
+                    }
+                });
+                getUserInfo.onclick = tqbApi.getUserInfo({
+                    success: function (res) {
+                        if (res.code === -1) {
+                            model.innerHTML = res.msg;
+                        } else {
+                            model.innerHTML = "前端类型：" + res.data.font + "；   APP 版本：" + res.data.appver + "；其他数据详见API，此处不予展示。";
+                        }
+                        show();
+                    }
+                });
+                register.onclick = tqbApi.register({idenify: "这是一个字符串"});
+                jsProxyVer.onclick = tqbApi.jsProxyVer({
+                    success: function (data) {
+                        if (res.code === -1) {
+                            model.innerHTML = res.msg;
+                        } else {
+                            model.innerHTML = res;
+                        }
+                        show();
+                    }
+                });
+                getCallHistory.onclick = tqbApi.getCallHistory({
+                    success: function (res) {
+                        if (res.code === -1) {
+                            model.innerHTML = res.msg;
+                        } else {
+                            var sms = "";
+                            var l = 0;
+                            var y = 0;
+                            var v = 0;
+                            res.data.forEach(function (item, index) {
+                                if (item.type == 1) {
+                                    l++;
+                                } else if (item.type == 2) {
+                                    y++;
+                                } else {
+                                    v++;
+                                }
+                            });
+                            model.innerHTML = "通话总计：" + res.data.length + "条；<br/>已拨：" + y + "条；来电：" + l + "条；未接" + v + "条；";
+                        }
+                        show();
+                    }
+                });
+                getSmsHistory.onclick = tqbApi.getSmsHistory({
+                    success: function (res) {
+                        if (res.code === -1) {
+                            model.innerHTML = res.msg;
+                        } else {
+                            var sms = "";
+                            var j = 0;
+                            var f = 0;
+                            res.data.forEach(function (item, index) {
+                                if (item.type == 1) {
+                                    j++;
+                                } else {
+                                    f++;
+                                }
+                            });
+                            model.innerHTML = "短信共：" + res.data.length + "条；<br/>接收短信：" + j + "条；发送短信：" + f + "条；";
+                        }
+                        show();
+                    }
+                });
+                setNavbarRightBtn.onclick = tqbApi.setNavbarRightBtn({
+                    frontColor: "#dddddd",
+                    title: "确定",
+                    imageUrl: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1502453123469&di=e536d54beb79208faec4f2ff8c3e188a&imgtype=0&src=http%3A%2F%2Fimg11.3lian.com%2Ficon%2F10%2F24.jpg",
+                    activePath: "http://test.taoqian123.com.cn/",
+                    success: function (res) {
+                        if (res.code === -1) {
+                            model.innerHTML = res.msg;
+                        } else {
+                            model.innerHTML = res.data;
+                        }
+                        show();
+                    }
+                });
+                tqbApi.setNavbarRightBtn2({
+                    success: function (res) {
+                        model.innerHTML = res;
+                        show();
+                    }, info: "反馈信息"
+                });
+            }, 0);
+        }, 500);
+    }
+</script>
+<div id="bg">
+    <div id="modelBox">
+        <div id="model">model</div>
+        <div id="close" onclick="shut()">
+            关闭
+        </div>
+    </div>
+</div>
+<div id="content">
+    <h1>淘钱宝API Demo</h1>
+    <h2 style="margin-top: 80px;">相机/图片相关</h2>
+    <table>
+        <tbody>
+        <tr>
+            <td>
+                <strong>说明</strong>
+            </td>
+            <td>
+                <strong>例子</strong>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>拍照</strong>
+            </td>
+            <td>
+                <button id="chooseImage_camera">chooseImage_camera</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>相册</strong>
+            </td>
+            <td>
+                <button id="chooseImage_album">chooseImage_album</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>拍照/相册</strong>
+            </td>
+            <td>
+                <button id="chooseImage">chooseImage</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>预览图片</strong>
+            </td>
+            <td>
+                <button id="previewImage">previewImage</button>
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+    <h2>剪贴板相关</h2>
+    <table>
+        <tbody>
+        <tr>
+            <td>
+                <strong>设置系统剪贴板的内容</strong>
+            </td>
+            <td>
+                <button id="setClipboardData">setClipboardData</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>获取系统剪贴板内容</strong>
+            </td>
+            <td>
+                <button id="getClipboardData">getClipboardData</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <h2>短信/通讯相关</h2>
+    <table>
+        <tbody>
+        <tr>
+            <td>
+                <strong>说明</strong>
+            </td>
+            <td>
+                <strong>例子</strong>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>获取短信记录</strong>
+            </td>
+            <td>
+                <button id="getSmsHistory">getSmsHistory</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>拨打电话</strong>
+            </td>
+            <td>
+                <button id="makePhoneCall">makePhoneCall</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>获取通话记录</strong>
+            </td>
+            <td>
+                <button id="getCallHistory">getCallHistory</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>获取单个通讯录</strong>
+            </td>
+            <td>
+                <button id="getContact">getContact</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>获取全部通讯录</strong>
+            </td>
+            <td>
+                <button id="getAddressBook">getAddressBook</button>
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+    <h2>导航相关</h2>
+    <table>
+        <tbody>
+        <tr>
+            <td>
+                <strong>说明</strong>
+            </td>
+            <td>
+                <strong>例子</strong>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>打开一个新页面</strong>
+            </td>
+            <td>
+                <button id="navigateTo">navigateTo</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>当前页面加载一个新URL</strong>
+            </td>
+            <td>
+                <button id="redirectTo">redirectTo</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>关闭当前页面（暂不实现多级关闭）</strong>
+            </td>
+            <td>
+                <button id="navigateBack">navigateBack</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <h2>导航栏相关</h2>
+    <table>
+        <tbody>
+        <tr>
+            <td>
+                <strong>说明</strong>
+            </td>
+            <td>
+                <strong>例子</strong>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>设置导航栏标题</strong>
+            </td>
+            <td>
+                <button id="setNavigationBarTitle">setNavigationBarTitle</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>设置导航栏颜色</strong>
+            </td>
+            <td>
+                <button id="setNavigationBarColor">setNavigationBarColor</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>显示导航栏 (微信没有这个) (无输入)</strong>
+            </td>
+            <td>
+                <button id="showNavigationBar">showNavigationBar</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>隐藏导航栏 (微信没有这个) (无输入)</strong>
+            </td>
+            <td>
+                <button id="hideNavigationBar">hideNavigationBar</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>设置导航懒右侧按钮,点击实现相应功能</strong>
+            </td>
+            <td>
+                <button id="setNavbarRightBtn">setNavbarRightBtn</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <h2>分享/系统相关</h2>
+    <table>
+        <tbody>
+        <td>
+            <strong>分享</strong>
+        </td>
+        <td>
+            <button id="shareInfo">shareInfo</button>
+        </td>
+        <tr>
+            <td>
+                <strong>获取经纬度</strong>
+            </td>
+            <td>
+                <button id="getLocation">getLocation</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>获取设备相关信息</strong>
+            </td>
+            <td>
+                <button id="getDeviceInfo">getDeviceInfo</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>获取协议版本</strong>
+            </td>
+            <td>
+                <button id="jsProxyVer">jsProxyVer</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <h2>用户相关</h2>
+    <table>
+        <tbody>
+        <tr>
+            <td>
+                <strong>说明</strong>
+            </td>
+            <td>
+                <strong>例子</strong>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>注册</strong>
+            </td>
+            <td>
+                <button id="register">register</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>登录</strong>
+            </td>
+            <td>
+                <button id="login">login</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>注销登录</strong>
+            </td>
+            <td>
+                <button id="logout">logout</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>获取用户信息</strong>
+            </td>
+            <td>
+                <button id="getUserInfo">getUserInfo</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
